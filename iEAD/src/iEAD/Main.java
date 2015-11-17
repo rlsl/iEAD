@@ -9,11 +9,12 @@ public class Main {
 	private static Scanner teclaS, teclaI;
     private static List<Conta> contas;
     
-    //private int telefone;
-	//private String login,
-	//				nome,
-	//				senha,
-	//				endereco;
+    private static int telefone
+    						,cpf;
+	private static String login,
+							nome,
+							senha,
+							endereco;
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
@@ -80,19 +81,29 @@ public class Main {
 	
 	private static void login() {
 		System.out.println("\nTela de Login \n");
-		String user = entradaTexto("Login:");
-		String pass = entradaTexto("Senha:");
+		String user = entradaTexto("Login: ");
+		String pass = entradaTexto("Senha: ");
 		if(retornaLogin(user,pass) == true) {
 			System.out.println("\nUsuario Logado \n");
 			while (true) {  
 	            String opcao = menuUsuario();  
 	  
 	            if (opcao.equalsIgnoreCase("s")) {  
-	            	System.out.println("\nImplementando \n");
-	            } else if (opcao.equalsIgnoreCase("e")) {  
-	            	System.out.println("\nImplementando \n");
+	            	if(updateLogin(1) == true) {
+	            		System.out.println("\nSenha alterada com sucesso \n");
+	            	}
+	            } else if (opcao.equalsIgnoreCase("n")) {
+	            	if(updateLogin(2) == true) {
+	            		System.out.println("\nNome atualizado com sucesso \n");
+	            	} 
+	            } else if (opcao.equalsIgnoreCase("e")) {
+	            	if(updateLogin(3) == true) {
+	            		System.out.println("\nEndereço atualizado com sucesso \n");
+	            	}
 	            } else if (opcao.equalsIgnoreCase("t")) {
-	            	System.out.println("\nImplementando \n");
+	            	if(updateLogin(4) == true) {
+	            		System.out.println("\nTelefone alterada com sucesso \n");
+	            	}
 	            } else if (opcao.equalsIgnoreCase("x")) {
 	            	break;
 	            } else {  
@@ -105,13 +116,78 @@ public class Main {
 		}
 	}
 	
+	private static boolean updateLogin(int selecao) {
+		for (int i = 0; i < contas.size(); i++) {
+			Conta u = contas.get(i);
+			
+			if(login.equals(u.getLogin())) {
+				switch(selecao) {
+				case 1:
+					senha = entradaTexto("Digite nova senha: ");
+					if(senha.equals(u.getSenha())) {
+						System.out.println("\nSenha não atualizada, igual a anterior \n");
+						return false;
+					} else {
+						u.setSenha(senha);
+						contas.set(i, u);
+						break;
+					}
+				case 2:
+					nome = entradaTexto("Digite a atualização do seu nome: ");
+					if(nome.equals(u.getNome())) {
+						System.out.println("\nNome não atualizada, igual a anterior \n");
+						return false;
+					} else {
+						u.setNome(nome);
+						contas.set(i, u);
+						break;
+					}
+				case 3:
+					endereco = entradaTexto("Digite novo endereço: ");
+					if(endereco.equals(u.getEndereco())) {
+						System.out.println("\nEndereço não atualizada, igual a anterior \n");
+						return false;
+					} else {
+						u.setEndereco(endereco);
+						contas.set(i, u);
+						break;
+					}
+				case 4:
+					telefone = entradaNumero("Digite novo telefone: ");
+					if(telefone == (u.getTelefone())) {
+						System.out.println("\nTelefone não atualizada, igual a anterior \n");
+						return false;
+					} else {
+						u.setTelefone(telefone);
+						contas.set(i, u);
+						break;
+					}
+				default:
+					System.out.println("\nOpção invalida \n");
+					return false;
+				}
+				
+				return true;
+            }
+        }
+		return false;
+	}
+	
 	private static boolean retornaLogin(String user, String pass) {
 		if (contas.size() == 0) {  
-            System.out.println("\nNão existem cadastros !!! \n");  
+            System.out.println("\nNão existem cadastros !!! \n");
         } else {  
             for (int i = 0; i < contas.size(); i++) {
             	Conta u = contas.get(i);
             	if(user.equals(u.getLogin()) && (pass.equals(u.getSenha()))) {
+            		if(login != u.getLogin()) {
+            			login = u.getLogin();
+                		senha = u.getSenha();
+                		nome = u.getNome();
+                		cpf = u.getCpf();
+                		endereco = u.getEndereco();
+                		telefone = u.getTelefone();
+            		}
             		return true;
             	}
             }
@@ -129,8 +205,9 @@ public class Main {
 	
 	private static String menuUsuario() {  
         System.out.println("Selecione a opção:");  
-        System.out.println("S - Alterar senha");  
-        System.out.println("E - Alterar endereço");
+        System.out.println("S - Alterar senha");
+        System.out.println("N - Atualizar nome");
+        System.out.println("E - Atualizar endereço");
         System.out.println("T - Alterar telefone");
         System.out.println("X - Logout");  
         return teclaS.nextLine();  
