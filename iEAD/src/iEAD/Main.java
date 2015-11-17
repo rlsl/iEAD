@@ -121,22 +121,6 @@ public class Main {
             
 	}
 	
-	private static void listarCadastros() {  
-        if (contas.size() == 0) {  
-            System.out.println("\nNão existem cadastros !!!\n");  
-        } else {  
-            System.out.println("\nLista de Cadastros\n");  
-            for (int i = 0; i < contas.size(); i++) {  
-                Conta u = contas.get(i);  
-                System.out.println("Cadastro número: " + i);  
-                System.out.println("\tNome: " + u.getLogin());  
-                System.out.println("\tLogin: " + u.getSenha());  
-                System.out.println("\tCargo: " + u.getNome() + "\n");  
-            }  
-            System.out.println("\nFim da lista\n");  
-        }  
-    }
-	
 	private static String menuCadastro() {  
         System.out.println("Selecione a opção:");  
         System.out.println("C - Criar usuario");  
