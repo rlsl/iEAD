@@ -1,7 +1,8 @@
 package iEAD;
 
 public class Conta {
-	private int telefone;
+	private int telefone,
+					cpf;
 	private String login,
 					nome,
 					senha,
@@ -50,5 +51,12 @@ public class Conta {
 	public int getTelefone(){
 		return telefone;
 	}
-
+	
+	public void setCpf(int cpf) {
+		this.cpf = cpf;
+	}
+	
+	public int getCpf(){
+		return cpf;
+	}
 }
