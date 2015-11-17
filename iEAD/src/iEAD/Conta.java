@@ -1,7 +1,7 @@
 package iEAD;
 
 public class Conta {
-	private int telefone,
+	private long telefone,
 					cpf;
 	private String login,
 					nome,
@@ -44,19 +44,19 @@ public class Conta {
 		return nome;
 	}
 	
-	public void setTelefone(int telefone) {
+	public void setTelefone(long telefone) {
 		this.telefone = telefone;
 	}
 	
-	public int getTelefone(){
+	public long getTelefone(){
 		return telefone;
 	}
 	
-	public void setCpf(int cpf) {
+	public void setCpf(long cpf) {
 		this.cpf = cpf;
 	}
 	
-	public int getCpf(){
+	public long getCpf(){
 		return cpf;
 	}
 }

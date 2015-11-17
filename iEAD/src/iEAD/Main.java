@@ -9,7 +9,7 @@ public class Main {
 	private static Scanner teclaS, teclaI;
     private static List<Conta> contas;
     
-    private static int telefone
+    private static long telefone
     						,cpf;
 	private static String login,
 							nome,
@@ -133,6 +133,7 @@ public class Main {
 						break;
 					}
 				case 2:
+					System.out.println("\nNome cadastrado: " + nome);
 					nome = entradaTexto("Digite a atualização do seu nome: ");
 					if(nome.equals(u.getNome())) {
 						System.out.println("\nNome não atualizada, igual a anterior \n");
@@ -143,6 +144,7 @@ public class Main {
 						break;
 					}
 				case 3:
+					System.out.println("\nEndereço cadastrado: " + endereco);
 					endereco = entradaTexto("Digite novo endereço: ");
 					if(endereco.equals(u.getEndereco())) {
 						System.out.println("\nEndereço não atualizada, igual a anterior \n");
@@ -153,6 +155,7 @@ public class Main {
 						break;
 					}
 				case 4:
+					System.out.println("\nTelefone cadastrado: " + telefone);
 					telefone = entradaNumero("Digite novo telefone: ");
 					if(telefone == (u.getTelefone())) {
 						System.out.println("\nTelefone não atualizada, igual a anterior \n");
@@ -218,8 +221,8 @@ public class Main {
         return teclaS.nextLine();  
     }
 	
-	private static int entradaNumero(String info) {  
+	private static long entradaNumero(String info) {  
         System.out.println(info);
-        return teclaI.nextInt();  
+        return teclaI.nextLong();  
     }
 }
