@@ -115,10 +115,8 @@ public class Main {
             		return true;
             	}
             }
-            return false;
         }
-		return false;
-            
+		return false;        
 	}
 	
 	private static String menuCadastro() {  
