@@ -7,10 +7,12 @@ import java.util.ArrayList;
 public class Main {
 	
 	private static Scanner teclaS, teclaI;
+	
     private static List<Conta> contas;
+    private static List<Amigo> amigos;
     
-    private static long telefone
-    						,cpf;
+    private static long telefone,
+    						cpf;
 	private static String login,
 							nome,
 							senha,
@@ -21,7 +23,8 @@ public class Main {
 		
 		teclaS = new Scanner(System.in);
 		teclaI = new Scanner(System.in);
-        contas = new ArrayList<Conta>();  
+        contas = new ArrayList<Conta>();
+        amigos = new ArrayList<Amigo>();
   
         System.out.println("Bem Vindo ao iEAD");  
   
@@ -47,10 +50,18 @@ public class Main {
         	
             System.out.println("Cadastro de Usuário");  
             Conta usuario = new Conta();  
-            usuario.setLogin(entradaTexto("Login:"));  
+            usuario.setLogin(entradaTexto("Login:"));
+            if (retornaLogin(usuario.getLogin()) == true) {
+            	System.out.println("Usuario já cadastrado, reiniciando cadastro.");
+            	continue;
+            }
             usuario.setSenha(entradaTexto("Senha: "));  
             usuario.setNome(entradaTexto("Nome: "));
             usuario.setCpf(entradaNumero("CPF: "));
+            if (retornaLogin(usuario.getCpf()) == true) {
+            	System.out.println("CPF já cadastrado, reiniciando cadastro.");
+            	continue;
+            }
             usuario.setEndereco(entradaTexto("Endereço: "));
             usuario.setTelefone(entradaNumero("Telefone: "));
   
@@ -104,6 +115,12 @@ public class Main {
 	            	if(updateLogin(4) == true) {
 	            		System.out.println("\nTelefone alterada com sucesso \n");
 	            	}
+	            } else if (opcao.equalsIgnoreCase("a")) {
+	            	System.out.println("\nImplementando \n");
+	            } else if (opcao.equalsIgnoreCase("c")) {
+	            	System.out.println("\nImplementando \n");
+	            } else if (opcao.equalsIgnoreCase("l")) {
+	            	System.out.println("\nImplementando \n");
 	            } else if (opcao.equalsIgnoreCase("x")) {
 	            	break;
 	            } else {  
@@ -112,7 +129,7 @@ public class Main {
 	        }  
 
 		} else {
-			System.out.println("\nUsuario não cadastrado \n");
+			System.out.println("\nUsuario ou senha estão incorreta(s) ou usuario não cadastrado \n");
 		}
 	}
 	
@@ -198,6 +215,34 @@ public class Main {
 		return false;        
 	}
 	
+	private static boolean retornaLogin(String login) {
+		if (contas.size() == 0) {  
+			return false;
+        } else {  
+            for (int i = 0; i < contas.size(); i++) {
+            	Conta u = contas.get(i);
+            	if(login.equals(u.getLogin())) {
+            		return true;
+            	}
+            }
+        }
+		return false;        
+	}
+	
+	private static boolean retornaLogin(Long cpf) {
+		if (contas.size() == 0) {  
+			return false;
+        } else {  
+            for (int i = 0; i < contas.size(); i++) {
+            	Conta u = contas.get(i);
+            	if(cpf.equals(u.getCpf())) {
+            		return true;
+            	}
+            }
+        }
+		return false;        
+	}
+	
 	private static String menuCadastro() {  
         System.out.println("Selecione a opção:");  
         System.out.println("C - Criar usuario");  
@@ -207,11 +252,17 @@ public class Main {
     }
 	
 	private static String menuUsuario() {  
-        System.out.println("Selecione a opção:");  
+        System.out.println("Selecione a opção:");
+        System.out.println("-------------------------");
+        System.out.println("A - Adicionar amigos");
+        System.out.println("C - Aceitar convites");
+        System.out.println("L - Listar amigos");
+        System.out.println("-------------------------");
         System.out.println("S - Alterar senha");
         System.out.println("N - Atualizar nome");
         System.out.println("E - Atualizar endereço");
         System.out.println("T - Alterar telefone");
+        System.out.println("-------------------------");
         System.out.println("X - Logout");  
         return teclaS.nextLine();  
     }

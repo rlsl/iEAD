@@ -28,7 +28,7 @@ public class Conta {
 		return senha;
 	}
 	
-	public void setEndereco(String endereço) {
+	public void setEndereco(String endereco) {
 		this.endereco = endereco;
 	}
 	
