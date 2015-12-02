@@ -10,6 +10,7 @@ public class Main {
 	
     private static List<Conta> contas;
     private static List<Amigo> amigos;
+    private static List<Mensagem> mensagem;
     
     private static long telefone,
     						cpf;
@@ -25,6 +26,7 @@ public class Main {
 		teclaI = new Scanner(System.in);
         contas = new ArrayList<Conta>();
         amigos = new ArrayList<Amigo>();
+        mensagem = new ArrayList<Mensagem>();
   
         System.out.println("Bem Vindo ao iEAD \n");  
   
@@ -128,6 +130,15 @@ public class Main {
 	            
 	            if (opcao.equalsIgnoreCase("l"))
 	            	listaAmigos();
+	            
+	            if (opcao.equalsIgnoreCase("m"))
+	            	enviarMensagens();
+	            
+	            if (opcao.equalsIgnoreCase("r"))
+	            	lerMensagens();
+	            
+	            if (opcao.equalsIgnoreCase("s"))
+	            	apagarMensagens();
 	            
 	            if (opcao.equalsIgnoreCase("x"))
 	            	break;
@@ -269,7 +280,19 @@ public class Main {
 			
 		}
 	}
-			
+	
+	private static void enviarMensagens() {
+		System.out.println("\nEm construção\n");
+	}
+	
+	private static void lerMensagens() {
+		System.out.println("\nEm construção\n");
+	}
+	
+	private static void apagarMensagens() {
+		System.out.println("\nEm construção\n");
+	}
+
 	private static boolean aceitarConvite(String lamigo) {
 		if(retornaConvite(lamigo) == true) {
 			for (int i = 0; i < amigos.size(); i++) {
@@ -410,11 +433,15 @@ public class Main {
 	
 	private static String menuUsuario() {  
         System.out.println("\nSelecione a opção:");
-        System.out.println("-------------------------");
+        System.out.println("------------Amigo-------------");
         System.out.println("A - Adicionar amigos");
         System.out.println("C - Aceitar convites");
         System.out.println("L - Listar amigos");
-        System.out.println("-------------------------");
+        System.out.println("------------Mensagem-------------");
+        System.out.println("M - Enviar mensagens");
+        System.out.println("R - Ler mensagens");
+        System.out.println("S - Excluir mensagens");
+        System.out.println("------------Perfil-------------");
         System.out.println("S - Alterar senha");
         System.out.println("N - Atualizar nome");
         System.out.println("E - Atualizar endereço");
