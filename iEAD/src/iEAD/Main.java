@@ -10,7 +10,7 @@ public class Main {
 	
     private static List<Conta> contas;
     private static List<Amigo> amigos;
-    private static List<Mensagem> mensagem;
+    private static List<Mensagem> mensagens;
     
     private static long telefone,
     						cpf;
@@ -26,7 +26,7 @@ public class Main {
 		teclaI = new Scanner(System.in);
         contas = new ArrayList<Conta>();
         amigos = new ArrayList<Amigo>();
-        mensagem = new ArrayList<Mensagem>();
+        mensagens = new ArrayList<Mensagem>();
   
         System.out.println("Bem Vindo ao iEAD \n");  
   
@@ -136,9 +136,6 @@ public class Main {
 	            
 	            if (opcao.equalsIgnoreCase("r"))
 	            	lerMensagens();
-	            
-	            if (opcao.equalsIgnoreCase("s"))
-	            	apagarMensagens();
 	            
 	            if (opcao.equalsIgnoreCase("x"))
 	            	break;
@@ -282,15 +279,67 @@ public class Main {
 	}
 	
 	private static void enviarMensagens() {
-		System.out.println("\nEm construção\n");
+		while(true) {
+			String statusm = "", mconta = entradaTexto("\nDigite o login do usuario, que será enviado o recado:");
+			
+			if(retornaLogin(mconta) == true && mconta != Main.login) {
+				String textorecado = entradaTexto("\nDigite o recado para o usuario " + mconta + " agora:");
+				statusm = entradaTexto("\nMensagem pronta para ser enviado, deseja continuar? S/N : ");
+				if (statusm.equalsIgnoreCase("s")) {
+					enviarMensagem(mconta,textorecado);
+					break;
+				}
+			}
+			
+			if (statusm.equalsIgnoreCase("n") || retornaAmigo(mconta) == true) {
+				statusm = entradaTexto("\nMensagem não enviado, deseja continuar? S/N : ");
+				if(statusm.equalsIgnoreCase("n"))
+					break;
+			}
+			
+		}
 	}
 	
 	private static void lerMensagens() {
-		System.out.println("\nEm construção\n");
-	}
-	
-	private static void apagarMensagens() {
-		System.out.println("\nEm construção\n");
+		if (mensagens.size() == 0)
+            System.out.println("\nNenhuma mensagem \n");
+		else {
+			String mconta = "";
+            
+        	for (int i = 0; i < mensagens.size(); i++) {
+            	Mensagem m = mensagens.get(i);
+            	if(m.getDestinatario().equals(Main.login) && m.getLeitura() == false)
+            		mconta = "\n* Remetente: " + m.getRemetente() + ". Recado: " + m.getRecado().substring(0, 7) + "...";
+            }
+            
+            if(mconta == "")
+            	System.out.println("\nNenhum recado \n");
+            else {
+            	System.out.println("\nLista de recados: " + mconta + "\n");
+            	
+            	String mler = entradaTexto("\nDigite o login do remetente para ler toda a mensagem:");
+            	if(retornaLogin(mler) == true && mler != Main.login) {
+            		int i = 0;
+            		while(true) {
+            			Mensagem m = mensagens.get(i);
+                    	if(m.getDestinatario().equals(Main.login) && m.getLeitura() == false && m.getRemetente().equals(mler)) {
+                    		mconta = "\nRecado escolhido: \nRemetente: " + m.getRemetente() + "\nRecado: " + m.getRecado();
+                    		System.out.println(mconta);
+                    		String x = entradaTexto("\n\nLer mais recados S/N: ");
+                    		m.setLeitura(true);
+                    		mensagens.set(i, m);
+                    		break;
+                    	}
+                    	if (i >= mensagens.size())
+                    		break;
+                    	i++;
+            		}
+            	}
+            		
+            	else
+            		System.out.println("\nUsuario não encontrado\n");
+            }
+		}
 	}
 
 	private static boolean aceitarConvite(String lamigo) {
@@ -415,12 +464,24 @@ public class Main {
 	private static void enviarConvite(String lamigo) {  
         Amigo a = new Amigo();  
         
-        a.setConta(login);  
+        a.setConta(Main.login);  
         a.setAmigo(lamigo);
         a.setStatus(false);
         
         amigos.add(a);
         System.out.println("\nConvite enviado. \n");
+	}
+	
+	private static void enviarMensagem(String mconta, String textorecado) {  
+        Mensagem m = new Mensagem();  
+        
+        m.setDestinatario(mconta);
+        m.setRemetente(Main.login);
+        m.setRecado(textorecado);
+        m.setLeitura(false);
+        
+        mensagens.add(m);
+        System.out.println("\nRecado enviado. \n");
 	}
 	
 	private static String menuCadastro() {  
@@ -440,7 +501,6 @@ public class Main {
         System.out.println("------------Mensagem-------------");
         System.out.println("M - Enviar mensagens");
         System.out.println("R - Ler mensagens");
-        System.out.println("S - Excluir mensagens");
         System.out.println("------------Perfil-------------");
         System.out.println("S - Alterar senha");
         System.out.println("N - Atualizar nome");

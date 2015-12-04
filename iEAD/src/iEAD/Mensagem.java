@@ -35,7 +35,7 @@ public class Mensagem {
 		return recado;
 	}
 	
-	public void setStatus(boolean leitura) {
+	public void setLeitura(boolean leitura) {
 		this.leitura = leitura;
 	}
 	
